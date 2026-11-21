@@ -13,17 +13,16 @@ _IMAGE_SIZE_RE = re.compile(
 )
 
 _IMAGE_SIZES: list[tuple[str, str]] = [
-    ("small", "34s"),
-    ("medium", "64s"),
-    ("large", "174s"),
-    ("extralarge", "300x300"),
+    ("medium", "500x500"),
+    ("large", "1000x1000"),
+    ("extralarge", ""),
 ]
 
 _DATE_FORMATS = (
     "%A %d %b %Y, %I:%M%p",  # Wednesday 18 Nov 2026, 7:18pm
-    "%d %b %Y, %I:%M%p",     # 18 Nov 2026, 7:18pm
-    "%d %b %Y, %H:%M",       # 18 Nov 2026, 19:18
-    "%d %B %Y",              # 16 April 1997
+    "%d %b %Y, %I:%M%p",  # 18 Nov 2026, 7:18pm
+    "%d %b %Y, %H:%M",  # 18 Nov 2026, 19:18
+    "%d %B %Y",  # 16 April 1997
 )
 
 
@@ -65,16 +64,17 @@ def parse_utc_timestamp(text: str | None) -> tuple[int, str] | None:
 def expand_images(src: str | None) -> list[dict[str, str]]:
     """Build Last.fm API-style image list (small/medium/large/extralarge) from an image URL."""
     if not src:
-        return [
-            {"#text": "", "size": size}
-            for size, _ in _IMAGE_SIZES
-        ]
+        return [{"#text": "", "size": size} for size, _ in _IMAGE_SIZES]
     match = _IMAGE_SIZE_RE.match(src)
     if not match:
         return [{"#text": src, "size": size} for size, _ in _IMAGE_SIZES]
     prefix, _, suffix = match.groups()
     return [
-        {"#text": f"{prefix}{token}{suffix}", "size": size}
+        {
+            "#text": (
+                f"{prefix}{token}{suffix}" if token else f"{prefix}{suffix.lstrip('/')}"
+            ),
+            "size": size,
+        }
         for size, token in _IMAGE_SIZES
     ]
-
