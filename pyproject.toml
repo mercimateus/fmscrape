@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fmscrape"
-version = "0.1.0"
+version = "0.1.1"
 description = "Last.fm public HTML scraper with an API-compatible interface (no API key required)."
 readme = "README.md"
 requires-python = ">=3.10"

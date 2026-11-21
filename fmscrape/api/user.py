@@ -87,7 +87,14 @@ class UserAPI:
         )
         if page > 1:
             params["page"] = page
-        path = f"/user/{quote(user, safe='')}/library"
+        use_overview = (
+            self._client.has_cookies
+            and page == 1
+            and from_ts is None
+            and to_ts is None
+            and limit <= 10
+        )
+        path = f"/user/{quote(user, safe='')}" if use_overview else f"/user/{quote(user, safe='')}/library"
         resp = self._client.get(path, params=params or None)
         return parse_user_recent_tracks(resp.text, url=str(resp.url), user=user, page=page, limit=limit)
 
