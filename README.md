@@ -7,13 +7,16 @@ Python library for reading public **Last.fm** data without an API key, with an i
 ## Installation
 
 ```bash
-cd fmscrape
-python -m venv --system-site-packages .venv
-.\.venv\Scripts\activate
-pip install -e .
+pip install fmscrape
 ```
 
-> **Note**: Do not run scripts that `import fmscrape` from the parent directory containing the `fmscrape/` project folder, as Python will treat that folder as an empty namespace package. Run from inside `fmscrape/` or another directory.
+For local development:
+
+```bash
+git clone https://github.com/mercimateus/fmscrape.git
+cd fmscrape
+pip install -e .
+```
 
 ## Usage
 
