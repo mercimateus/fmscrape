@@ -44,7 +44,7 @@ with LastFmClient(raw_json=False) as client:
 
 ### With User Cookies
 
-Some user endpoints (`/user/<user>`, `/library/tracks`, `/loved`, `/tags`, and `period` / `from_ts` / `to_ts` filters) require browser session cookies. Only these 4 cookies are required: `sessionid`, `csrftoken`, `fsuid`, and `lfmanon=0`.
+Some user endpoints (`/user/<user>`, `/library/tracks`, `/loved`, `/tags`, and `period` / `from_ts` / `to_ts` filters) require browser session cookies. Passing cookies also bypasses Last.fm's anonymous CDN cache for live `nowplaying` updates in `user.get_recent_tracks`. Only these 4 cookies are required: `sessionid`, `csrftoken`, `fsuid`, and `lfmanon=0`.
 
 ```python
 from fmscrape import LastFmClient
